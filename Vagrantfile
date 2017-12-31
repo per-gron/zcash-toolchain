@@ -78,14 +78,22 @@ EOF
       cd musl-cross-make-stage2
       make -j4
       make install
-      mv output ../x86_64-linux-musl
+      mkdir ../zcash_cc_toolchain
+      mv output ../zcash_cc_toolchain/x86_64-linux-musl
       cd ..
       rm -rf musl-cross-make-stage2
       rm -r stage1
 
+      ### Prepare Bazel package
+      touch zcash_cc_toolchain/WORKSPACE
+      cp /vagrant/tmpl/CROSSTOOL zcash_cc_toolchain/
+      # A bug in Bazel requires this BUILD file to not have a .bazel extension.
+      cp /vagrant/tmpl/BUILD zcash_cc_toolchain/
+      cp /vagrant/tmpl/crosstool.bazel zcash_cc_toolchain/x86_64-linux-musl/BUILD.bazel
+
       ### Package
-      tar cJf x86_64-linux-musl.tar.xz x86_64-linux-musl
-      mv x86_64-linux-musl.tar.xz /vagrant/
+      tar cJf zcash_cc_toolchain.tar.xz zcash_cc_toolchain
+      mv zcash_cc_toolchain.tar.xz /vagrant/
 
 INNER_SHELL
 

@@ -1,0 +1,137 @@
+major_version: "1"
+minor_version: "0"
+default_target_cpu: "k8"
+
+default_toolchain {
+  cpu: "k8"
+  toolchain_identifier: "x86_64-linux-musl"
+}
+
+toolchain {
+  toolchain_identifier: "x86_64-linux-musl"
+  abi_version: "local"
+  abi_libc_version: "musl"
+  builtin_sysroot: ""
+  compiler: "compiler"
+  host_system_name: "local"
+  needsPic: false
+
+  # Don't use gold: It does not support --no-dynamic-linker and consequently
+  # not building static pie binaries. :(
+  supports_gold_linker: false
+  # linker_flag: "-fuse-ld=gold"
+  supports_start_end_lib: false
+
+  # Intentionally leave this line out: This tells Bazel that this toolchain does
+  # not support making dynamic libraries. (Technically it does support that, but
+  # this toolchain is for making fully statically linked executables).
+  # linking_mode_flags { mode: DYNAMIC }
+
+  supports_incremental_linker: false
+  supports_fission: false
+  supports_interface_shared_objects: false
+  supports_normalizing_ar: false
+  target_libc: "musl"
+  target_cpu: "k8"
+  target_system_name: "local"
+  cxx_flag: "-std=c++0x"
+  compiler_flag: "-static"
+  compiler_flag: "-pie"
+  linker_flag: "-static"
+  linker_flag: "-pie"
+  linker_flag: "-lstdc++"
+  linker_flag: "-lm"
+  linker_flag: "-Wl,-no-as-needed"
+  linker_flag: "-Wl,-z,relro,-z,now"
+  linker_flag: "-Wl,-z,noexecstack"
+  linker_flag: "-pass-exit-codes"
+
+  cxx_builtin_include_directory: "x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0"
+  cxx_builtin_include_directory: "x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0/x86_64-linux-musl"
+  cxx_builtin_include_directory: "x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0/backward"
+  cxx_builtin_include_directory: "x86_64-linux-musl/x86_64-linux-musl/include"
+  cxx_builtin_include_directory: "x86_64-linux-musl/lib/gcc/x86_64-linux-musl/7.2.0/include"
+  cxx_builtin_include_directory: "x86_64-linux-musl/x86_64-linux-musl/sysroot/usr/include"
+
+  # These -isystem include paths are there to make sure that when the compiler
+  # writes out the list of header files that were read, the paths are relative.
+  # This is necessary to make the cxx_builtin_include_directory declarations
+  # above work.
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0"
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0/x86_64-linux-musl"
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/x86_64-linux-musl/include/c++/7.2.0/backward"
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/x86_64-linux-musl/include"
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/lib/gcc/x86_64-linux-musl/7.2.0/include"
+  compiler_flag: "-isystem"
+  compiler_flag: "external/zcash_cc_toolchain/x86_64-linux-musl/x86_64-linux-musl/sysroot/usr/include"
+
+  objcopy_embed_flag: "-I"
+  objcopy_embed_flag: "binary"
+  unfiltered_cxx_flag: "-fno-canonical-system-headers"
+  unfiltered_cxx_flag: "-Wno-builtin-macro-redefined"
+  unfiltered_cxx_flag: "-D__DATE__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIMESTAMP__=\"redacted\""
+  unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
+  compiler_flag: "-U_FORTIFY_SOURCE"
+  compiler_flag: "-fstack-protector-all"
+  compiler_flag: "-Wall"
+  compiler_flag: "-Wunused-but-set-parameter"
+  compiler_flag: "-Wno-free-nonheap-object"
+  compiler_flag: "-fno-omit-frame-pointer"
+  tool_path {name: "ld" path: "x86_64-linux-musl/bin/x86_64-linux-musl-ld" }
+  tool_path {name: "cpp" path: "x86_64-linux-musl/bin/x86_64-linux-musl-cpp" }
+  tool_path {name: "gcov" path: "x86_64-linux-musl/bin/x86_64-linux-musl-gcov" }
+  tool_path {name: "nm" path: "x86_64-linux-musl/bin/x86_64-linux-musl-nm" }
+  tool_path {name: "objcopy" path: "x86_64-linux-musl/bin/x86_64-linux-musl-objcopy" }
+  tool_path {name: "objdump" path: "x86_64-linux-musl/bin/x86_64-linux-musl-objdump" }
+  tool_path {name: "strip" path: "x86_64-linux-musl/bin/x86_64-linux-musl-strip" }
+  tool_path {name: "gcc" path: "x86_64-linux-musl/bin/x86_64-linux-musl-gcc" }
+  tool_path {name: "ar" path: "x86_64-linux-musl/bin/x86_64-linux-musl-ar" }
+
+  compilation_mode_flags {
+    mode: DBG
+    compiler_flag: "-g"
+  }
+  compilation_mode_flags {
+    mode: OPT
+    compiler_flag: "-g0"
+    compiler_flag: "-O2"
+    compiler_flag: "-D_FORTIFY_SOURCE=1"
+    compiler_flag: "-DNDEBUG"
+    compiler_flag: "-ffunction-sections"
+    compiler_flag: "-fdata-sections"
+    linker_flag: "-Wl,--gc-sections"
+  }
+
+  feature {
+    name: 'coverage'
+    provides: 'profile'
+    flag_set {
+      action: 'preprocess-assemble'
+      action: 'c-compile'
+      action: 'c++-compile'
+      action: 'c++-header-parsing'
+      action: 'c++-header-preprocessing'
+      action: 'c++-module-compile'
+      flag_group {
+        flag: '-fprofile-arcs'
+        flag: '-ftest-coverage'
+      }
+    }
+
+    flag_set {
+      action: 'c++-link-interface-dynamic-library'
+      action: 'c++-link-dynamic-library'
+      action: 'c++-link-executable'
+      flag_group {
+        flag: '-lgcov'
+      }
+    }
+  }
+  
+}

@@ -1,0 +1,83 @@
+package(default_visibility = ['//visibility:public'])
+
+filegroup(
+    name = 'gcc',
+    srcs = [
+        'bin/x86_64-linux-musl-gcc',
+    ],
+)
+
+filegroup(
+    name = 'ar',
+    srcs = [
+        'bin/x86_64-linux-musl-ar',
+    ],
+)
+
+filegroup(
+    name = 'ld',
+    srcs = [
+        'bin/x86_64-linux-musl-ld',
+        'bin/x86_64-linux-musl-ld.bfd',
+        'bin/x86_64-linux-musl-ld.gold',
+    ],
+)
+
+filegroup(
+    name = 'nm',
+    srcs = [
+        'bin/x86_64-linux-musl-nm',
+    ],
+)
+
+filegroup(
+    name = 'objcopy',
+    srcs = [
+        'bin/x86_64-linux-musl-objcopy',
+    ],
+)
+
+filegroup(
+    name = 'objdump',
+    srcs = [
+        'bin/x86_64-linux-musl-objdump',
+    ],
+)
+
+filegroup(
+    name = 'strip',
+    srcs = [
+        'bin/x86_64-linux-musl-strip',
+    ],
+)
+
+filegroup(
+    name = 'as',
+    srcs = [
+        'bin/x86_64-linux-musl-as',
+    ],
+)
+
+filegroup(
+    name = 'compiler_pieces',
+    srcs = glob([
+        'include/**',
+        'lib/**',
+        'libexec/**',
+        'x86_64-linux-musl/**',
+    ]),
+)
+
+filegroup(
+    name = 'compiler_components',
+    srcs = [
+        ':gcc',
+        ':ar',
+        ':ld',
+        ':nm',
+        ':objcopy',
+        ':objdump',
+        ':strip',
+        ':as',
+    ],
+)
