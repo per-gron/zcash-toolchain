@@ -13,6 +13,11 @@
 # search paths, making it suitable for build systems that perform reproducible
 # builds.
 
+# TODO(per-gron): Use https://github.com/dominictarr/deterministic-tar
+# TODO(per-gron): Use ARFLAGS=crD
+# TODO(per-gron): Use libfaketime
+# TODO(per-gron): Use https://github.com/ReproducibleBuilds/strip-nondeterminism.git
+
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
 
