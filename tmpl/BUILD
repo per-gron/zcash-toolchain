@@ -12,7 +12,7 @@ cc_toolchain_suite(
     name = "cc_toolchain",
     visibility = ["//visibility:public"],
     toolchains = {
-        "k8|compiler": ":cc-compiler-x86_64-linux-musl",
+        "k8|compiler": ":cc-compiler-x86_64-unknown-linux-gnu",
     },
 )
 
@@ -21,31 +21,31 @@ filegroup(
     srcs = [
         ":linux_gcc_linker_files",
         ":linux_gcc_compiler_files",
-        "//x86_64-linux-musl:compiler_pieces",
+        "//x86_64-unknown-linux-gnu:compiler_pieces",
     ],
 )
 
 filegroup(
     name = "linux_gcc_linker_files",
     srcs = [
-        "//x86_64-linux-musl:gcc",
-        "//x86_64-linux-musl:ld",
-        "//x86_64-linux-musl:ar",
-        "//x86_64-linux-musl:compiler_pieces",
+        "//x86_64-unknown-linux-gnu:gcc",
+        "//x86_64-unknown-linux-gnu:ld",
+        "//x86_64-unknown-linux-gnu:ar",
+        "//x86_64-unknown-linux-gnu:compiler_pieces",
     ],
 )
 
 filegroup(
     name = "linux_gcc_compiler_files",
     srcs = [
-        "//x86_64-linux-musl:gcc",
-        "//x86_64-linux-musl:ld",
-        "//x86_64-linux-musl:as",
+        "//x86_64-unknown-linux-gnu:gcc",
+        "//x86_64-unknown-linux-gnu:ld",
+        "//x86_64-unknown-linux-gnu:as",
     ],
 )
 
 cc_toolchain(
-    name = "cc-compiler-x86_64-linux-musl",
+    name = "cc-compiler-x86_64-unknown-linux-gnu",
     visibility = ["//visibility:public"],
     all_files = ":linux_gcc_all_files",
     compiler_files = ":linux_gcc_compiler_files",
@@ -53,8 +53,8 @@ cc_toolchain(
     dwp_files = ":empty",
     dynamic_runtime_libs = [":empty"],
     linker_files = ":linux_gcc_linker_files",
-    objcopy_files = "//x86_64-linux-musl:objcopy",
+    objcopy_files = "//x86_64-unknown-linux-gnu:objcopy",
     static_runtime_libs = [":empty"],
-    strip_files = "//x86_64-linux-musl:strip",
+    strip_files = "//x86_64-unknown-linux-gnu:strip",
     supports_param_files = 1,
 )
