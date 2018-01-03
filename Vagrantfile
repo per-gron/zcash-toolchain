@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
       cp /vagrant/tmpl/crosstool.bazel $TOOLCHAIN/BUILD.bazel
 
       # Remove the log of building the toolchain, it's nondeterministic.
-      rm $TOOLCHAIN/build.log.bz2
+      mv $TOOLCHAIN/build.log.bz2 ~/
 
       # Strip timestamps from .a static libraries.
       find $TOOLCHAIN -name '*.a' | PERLLIB=~/strip-nondeterminism/lib xargs ~/strip-nondeterminism/bin/strip-nondeterminism
