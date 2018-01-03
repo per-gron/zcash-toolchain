@@ -112,6 +112,7 @@ toolchain {
 
   compilation_mode_flags {
     mode: DBG
+    compiler_flag: "-Og"
     compiler_flag: "-g"
   }
   compilation_mode_flags {
