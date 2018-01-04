@@ -90,7 +90,6 @@ toolchain {
   unfiltered_cxx_flag: "-D__DATE__=\"redacted\""
   unfiltered_cxx_flag: "-D__TIMESTAMP__=\"redacted\""
   unfiltered_cxx_flag: "-D__TIME__=\"redacted\""
-  compiler_flag: "-U_FORTIFY_SOURCE"
   compiler_flag: "-fstack-protector-all"
   compiler_flag: "-Wall"
   compiler_flag: "-Wunused-but-set-parameter"
