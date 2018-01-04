@@ -36,6 +36,17 @@ toolchain {
     # -static-libstdc++ only works when invoking GCC with g++, which Bazel
     # doesn't use. Instead, force static linking against libstdc++ like this:
     linker_flag: "-l:libstdc++.a"
+    # Linking statically against libgcc improves portability of executables that
+    # this toolchain creates, but it comes with caveats. For an argument in favor
+    # of dynamic linking libgcc see https://gcc.gnu.org/ml/gcc/2000-04/msg00610.html
+    #
+    # Essentially: It is dangerous to statically link libgcc if you end up with
+    # shared libraries/executables that have their own different versions of libgcc
+    # exception handling in the same executable. When linking in MOSTLY_STATIC mode,
+    # this toolchain is designed to be used in a way that the only library that is
+    # linked dynamically is glibc, and all other code is linked statically and
+    # compiled with the same compiler. Because glibc doesn't use exceptions (it's C)
+    # linking statically against libgcc is safe.
     linker_flag: "-static-libgcc"
   }
 
