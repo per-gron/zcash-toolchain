@@ -21,7 +21,17 @@ toolchain {
   supports_start_end_lib: true
   linking_mode_flags {
     mode: DYNAMIC
-    linker_flag: "-lstdc++"
+    # Link statically against libstdc++ even in "DYNAMIC" mode, to maximize
+    # portability; the libstdc++ in this toolchain is fairly recent so binaries
+    # produced by the compiler may not work with less recent libstdc++ shared
+    # libraries.
+    #
+    # (Dynamic linking is only used for tests so this does not matter much for
+    # the production binaries).
+    #
+    # -static-libstdc++ only works when invoking GCC with g++, which Bazel
+    # doesn't use. Instead, force static linking against libstdc++ like this:
+    linker_flag: "-l:libstdc++.a"
   }
   linking_mode_flags {
     mode: FULLY_STATIC
