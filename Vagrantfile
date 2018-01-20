@@ -35,6 +35,9 @@ Vagrant.configure("2") do |config|
       cd crosstool-ng
       git checkout adaa3a5d8b4e2834a8c2c79efcdd3c718236ba5a
 
+      # Pull in a GCC patch to get deterministic builds
+      cp /vagrant/1000-disable-genchecksum.patch packages/gcc/7.2.0/
+
       ./bootstrap
       ./configure --enable-local
       make

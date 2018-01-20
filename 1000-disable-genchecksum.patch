@@ -1,0 +1,30 @@
+From 7e8efc6a3ff81076edf048dc4442f6fb0ce5834d Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Per=20Gr=C3=B6n?= <per.eckerdal@gmail.com>
+Date: Sat, 20 Jan 2018 21:59:24 +0100
+Subject: [PATCH] Disable the checksum that is burnt into the compiler
+ executables
+
+I don't know exactly why, but they break build determinism. This will
+make precompiled headers more brittle (the check that verifies that the
+pch was made by the same compiler is disabled) but for my use cases
+precompiled headers aren't used so I don't care.
+---
+ gcc/genchecksum.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gcc/genchecksum.c b/gcc/genchecksum.c
+index 6e93eab6add..8cd0907cf3c 100644
+--- a/gcc/genchecksum.c
++++ b/gcc/genchecksum.c
+@@ -114,7 +114,7 @@ main (int argc, char ** argv)
+   puts ("#include \"system.h\"");
+   fputs ("EXPORTED_CONST unsigned char executable_checksum[16] = { ", stdout);
+   for (i = 0; i < 16; i++)
+-    printf ("0x%02x%s", result[i], i == 15 ? " };\n" : ", ");
++    printf ("0x%02x%s", 1, i == 15 ? " };\n" : ", ");
+ 
+   return 0;
+ }
+-- 
+2.14.3 (Apple Git-98)
+
