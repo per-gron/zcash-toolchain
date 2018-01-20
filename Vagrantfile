@@ -56,6 +56,10 @@ Vagrant.configure("2") do |config|
 
       # Remove the log of building the toolchain, it's nondeterministic.
       mv $TOOLCHAIN/build.log.bz2 ~/
+      # Remove the nscd binary; the old-ish version of glibc used here uses
+      # __DATE__ and __TIME__ in a .c file there (nscd_stat.c) which breaks
+      # determinism. nscd is not used anyway so just remove it.
+      rm $TOOLCHAIN/$TOOLCHAIN/sysroot/usr/sbin/nscd
 
       # Strip timestamps from .a static libraries. This is still needed even
       # though libfaketime is used because the mtimes of files in the archive
