@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
     set -e
 
     apt-get install -y gcc g++ gperf bison flex texinfo help2man make \
-        libncurses5-dev python-dev libstdc++-4.8-dev git autoconf
+        libncurses5-dev python-dev libstdc++-4.8-dev git autoconf faketime
 
     su vagrant <<'INNER_SHELL'
       #!/bin/bash
@@ -39,7 +39,7 @@ Vagrant.configure("2") do |config|
       ./configure --enable-local
       make
       cp /vagrant/crosstool.config .config
-      ./ct-ng build
+      faketime '2018-01-01 00:00:00' ./ct-ng build
 
       TOOLCHAIN=x86_64-unknown-linux-gnu
 
@@ -57,7 +57,10 @@ Vagrant.configure("2") do |config|
       # Remove the log of building the toolchain, it's nondeterministic.
       mv $TOOLCHAIN/build.log.bz2 ~/
 
-      # Strip timestamps from .a static libraries.
+      # Strip timestamps from .a static libraries. This is still needed even
+      # though libfaketime is used because the mtimes of files in the archive
+      # include the difference between when they were built and when the archive
+      # was made.
       find $TOOLCHAIN -name '*.a' | PERLLIB=~/strip-nondeterminism/lib xargs ~/strip-nondeterminism/bin/strip-nondeterminism
 
       cd ~
