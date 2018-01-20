@@ -125,6 +125,7 @@ toolchain {
   tool_path {name: "nm" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-nm" }
   tool_path {name: "objcopy" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-objcopy" }
   tool_path {name: "objdump" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-objdump" }
+  tool_path {name: "readelf" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-readelf" }
   tool_path {name: "strip" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-strip" }
   tool_path {name: "gcc" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-gcc" }
   tool_path {name: "ar" path: "x86_64-unknown-linux-gnu/bin/x86_64-unknown-linux-gnu-ar" }

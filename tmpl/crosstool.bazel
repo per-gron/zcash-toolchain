@@ -45,6 +45,13 @@ filegroup(
 )
 
 filegroup(
+    name = 'readelf',
+    srcs = [
+        'bin/x86_64-unknown-linux-gnu-readelf',
+    ],
+)
+
+filegroup(
     name = 'strip',
     srcs = [
         'bin/x86_64-unknown-linux-gnu-strip',
@@ -77,6 +84,7 @@ filegroup(
         ':nm',
         ':objcopy',
         ':objdump',
+        ':readelf',
         ':strip',
         ':as',
     ],
