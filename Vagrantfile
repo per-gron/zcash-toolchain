@@ -71,8 +71,12 @@ Vagrant.configure("2") do |config|
       find $TOOLCHAIN -name '*.a' | PERLLIB=~/strip-nondeterminism/lib xargs ~/strip-nondeterminism/bin/strip-nondeterminism
 
       cd ~
-      tar cJf zcash_cc_toolchain.tar.xz zcash_cc_toolchain
-      mv zcash_cc_toolchain.tar.xz /vagrant/
+      find zcash_cc_toolchain -print0 | LC_ALL=C sort -z |
+          tar --null -T - --no-recursion \
+              --owner=root --group=root --numeric-owner \
+              --mode=go=rX,u+rw,a-s \
+              --mtime='2018-01-01' \
+              -c | xz > /vagrant/zcash_cc_toolchain.tar.xz
 INNER_SHELL
 
   SHELL
